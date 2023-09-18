@@ -16,5 +16,5 @@ COPY . .
 # Expose port 3210
 EXPOSE 3210
 
-# Define the command to run your application
+# Define the command to run the application
 CMD ["node", "ignapp.js"]
