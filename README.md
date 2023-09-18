@@ -51,7 +51,7 @@
     #!/bin/bash
 
     # Create a Kubernetes cluster with kind
-    kind create cluster --name my-cluster
+    kind create cluster --name ignite-cluster
 
     # Download kubeconfig
     mkdir -p ~/.kube
