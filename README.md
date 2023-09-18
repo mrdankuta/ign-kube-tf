@@ -125,7 +125,7 @@
     docker push <your-dockerhub-username>/ignapp:1.0
     ```
 
-**Step 4: Create a Kubernetes Deployment Manifest**
+## Step 4: Create a Kubernetes Deployment Manifest
 
 - Create a directory called `ign_deployment` to hold our deployment code.
 - Within the `ign_deployment`, create a Kubernetes deployment manifest file called `ign_k8s_deployment.yaml` for our app. Insert the following code which will pull our image from docker hub and deploy into the cluster:
