@@ -1,0 +1,12 @@
+extraa
+.terraform
+
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+kubectl
+
+node_modules
+
+*lock.*

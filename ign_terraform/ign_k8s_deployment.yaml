@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ignapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ignapp
+  template:
+    metadata:
+      labels:
+        app: ignapp
+    spec:
+      containers:
+        - name: ignapp
+          image: dankuta/ignapp:1.0
+          ports:
+            - containerPort: 3210
