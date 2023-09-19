@@ -60,7 +60,7 @@
         hostPort: 53
         protocol: TCP
     ```
-- Create a Bash script to automate the cluster deployment process. Let's call it `ignite_cluster.sh`:
+- Create a Bash script to automate the cluster deployment process. The script will also *download the kubeconfig for the cluster for use later.* Let's call it `ignite_cluster.sh`:
 
     ```bash
     #!/bin/bash
