@@ -230,11 +230,12 @@
 -  After the Terraform deployment is successful, you should have kube-prometheus up and running in your Kubernetes cluster.
 - To access the monitoring stack, you can use port forwarding to access the Grafana dashboard, Prometheus, and other components. Run each of these commands in a new terminal tab:
    ```bash
-   kubectl port-forward svc/kube-prometheus-stack-grafana 3220:80
-   kubectl port-forward svc/kube-prometheus-stack-prometheus 9090:9090
+   kubectl port-forward deployment/kube-prometheus-stack-grafana 3220:3000
+   kubectl port-forward deployment/kube-prometheus-stack-prometheus 9090:9090
    ```
-- Access Grafana in your web browser at http://localhost:3220. 
+- Access Grafana in your web browser at http://localhost:3220. Default username is `admin` and default password is `prom-operator`.
   ![Grafana](./docs-img/grafana1.png)
+  ![Grafana Dashboard](./docs-img/grafana2.png)
 - Access Prometheus in your web browser at http://localhost:9090. 
   ![Prometheus](./docs-img/prometheus1.png)
 - Configure Grafana to connect to Prometheus as a data source.
