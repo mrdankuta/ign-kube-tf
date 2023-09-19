@@ -238,5 +238,9 @@
   ![Grafana Dashboard](./docs-img/grafana2.png)
 - Access Prometheus in your web browser at http://localhost:9090.
   ![Prometheus](./docs-img/prometheus1.png)
-- Configure Grafana to connect to Prometheus as a data source.
-- Import or create Grafana dashboards and alerts as needed for monitoring and observability.
+- By default, using this deployment, Prometheus scrapes data from the cluster using ServiceMonitor and also by default Grafana is connected to- and draws on Prometheus as a data source.
+
+## Step 8: Configure Monitoring and Observability of the IgnApp
+-  Install a Prometheus Exporter to fetch data from the `ignapp`, translate the data to Prometheus Metrics, and expose the `/metrics` endpoint.
+-  Create a service for connecting to the exporter
+-  Configure ServiceMonitor so Prometheus can discover the app
