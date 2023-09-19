@@ -261,7 +261,4 @@
 
 ## Step 8: Configure Monitoring and Observability of the IgnApp
 
-- Install a Prometheus Exporter to fetch data from the `ignapp`, translate the data to Prometheus Metrics, and expose the `/metrics` endpoint.
-
-- Create a service for connecting to the exporter
-- Configure ServiceMonitor so Prometheus can discover the app
+- Using Helm, we will install `Prometheus BlackBox Exporter` to fetch data from the `ignapp` endpoint, translate the data to Prometheus Metrics, and expose the `/metrics` endpoint. The Helm chart will also Create a service for connecting to the exporter, and Configure ServiceMonitor with the `values` we pass to it so Prometheus can discover the exporter.

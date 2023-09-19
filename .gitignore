@@ -10,3 +10,5 @@ kubectl
 node_modules
 
 *lock.*
+
+blackbox-values.yaml
