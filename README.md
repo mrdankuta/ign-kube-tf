@@ -201,7 +201,7 @@
     ```
 - Run `terraform init`, `terraform plan`, and `terraform apply` to deploy the app into `ignite_cluster`
 
-## Step 6: Install Kube-Prometheus in the Cluster for Monitoring and Observability
+## Step 6: Using Helm and Terraform, Install Kube-Prometheus in the Cluster for Monitoring and Observability
 - First ensure `Helm` is installed. See the [Docs](https://helm.sh/docs/intro/install/) to use the installation guide.
 - We will use [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md) which will install all the necessary tools we need right now such as `Prometheus`, `Grafana`, `AlertManager`, and `Prometheus Node Exporter`. 
 - To install this using Terraform and Helm, we will add the helm terraform provider to our Terraform configuration:
@@ -236,7 +236,7 @@
 - Access Grafana in your web browser at http://localhost:3220. Default username is `admin` and default password is `prom-operator`.
   ![Grafana](./docs-img/grafana1.png)
   ![Grafana Dashboard](./docs-img/grafana2.png)
-- Access Prometheus in your web browser at http://localhost:9090. 
+- Access Prometheus in your web browser at http://localhost:9090.
   ![Prometheus](./docs-img/prometheus1.png)
 - Configure Grafana to connect to Prometheus as a data source.
 - Import or create Grafana dashboards and alerts as needed for monitoring and observability.

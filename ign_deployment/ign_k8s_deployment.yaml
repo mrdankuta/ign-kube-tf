@@ -18,3 +18,15 @@ spec:
           image: dankuta/ignapp:1.0
           ports:
             - containerPort: 3210
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ignapp-service
+spec:
+  selector:
+    app: ignapp
+  ports:
+  - protocol: TCP
+    port: 3210
+    targetPort: 3210
