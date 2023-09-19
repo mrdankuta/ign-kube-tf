@@ -45,13 +45,28 @@
 
 ## Step 2: Write a Bash Script for Cluster Deployment
 
+- We will create the Kind cluster with a configuration file that will specify appropriate DNS configurations that allows pulling of images. Create a file called `cluster_config.yaml` and insert the following code:
+    ```
+    ---
+    kind: Cluster
+    apiVersion: kind.x-k8s.io/v1alpha4
+    nodes:
+    - role: control-plane
+    extraPortMappings:
+    - containerPort: 53
+        hostPort: 53
+        protocol: UDP
+    - containerPort: 53
+        hostPort: 53
+        protocol: TCP
+    ```
 - Create a Bash script to automate the cluster deployment process. Let's call it `ignite_cluster.sh`:
 
     ```bash
     #!/bin/bash
 
     # Create a Kubernetes cluster with kind
-    kind create cluster --name ignite-cluster
+    kind create cluster --config ./cluster_config.yaml  --name ignite-cluster
 
     # Download kubeconfig
     mkdir -p ~/.kube
@@ -185,3 +200,42 @@
     }
     ```
 - Run `terraform init`, `terraform plan`, and `terraform apply` to deploy the app into `ignite_cluster`
+
+## Step 6: Install Kube-Prometheus in the Cluster for Monitoring and Observability
+- First ensure `Helm` is installed. See the [Docs](https://helm.sh/docs/intro/install/) to use the installation guide.
+- We will use [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md) which will install all the necessary tools we need right now such as `Prometheus`, `Grafana`, `AlertManager`, and `Prometheus Node Exporter`. 
+- To install this using Terraform and Helm, we will add the helm terraform provider to our Terraform configuration:
+    ```
+    provider "helm" {
+        kubernetes {
+            config_path = var.kube_config_path
+        }
+    }
+    ``` 
+- Add a new `helm_release` resource block to `main.tf`:
+    ```
+    resource "helm_release" "kube_prom" {
+        name       = "kube-prometheus-stack"
+        chart      = "prometheus-community/kube-prometheus-stack"
+    }
+    ```
+- Before running `terraform init`, ensure you have added the `kube-prometheus-stack` repository:
+    ```
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts 
+    helm repo update
+    ```
+- Run `terraform init`, `terraform plan`, and `terraform apply` to deploy `kube-prometheus-stack` into `ignite_cluster`
+
+## Step 7: Setup Monitoring and Observability of the Cluster with Prometheus and Grafana
+-  After the Terraform deployment is successful, you should have kube-prometheus up and running in your Kubernetes cluster.
+- To access the monitoring stack, you can use port forwarding to access the Grafana dashboard, Prometheus, and other components. Run each of these commands in a new terminal tab:
+   ```bash
+   kubectl port-forward svc/kube-prometheus-stack-grafana 3220:80
+   kubectl port-forward svc/kube-prometheus-stack-prometheus 9090:9090
+   ```
+- Access Grafana in your web browser at http://localhost:3220. 
+  ![Grafana](./docs-img/grafana1.png)
+- Access Prometheus in your web browser at http://localhost:9090. 
+  ![Prometheus](./docs-img/prometheus1.png)
+- Configure Grafana to connect to Prometheus as a data source.
+- Import or create Grafana dashboards and alerts as needed for monitoring and observability.
