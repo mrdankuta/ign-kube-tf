@@ -172,6 +172,18 @@
             image: dankuta/ignapp:1.0
             ports:
                 - containerPort: 3210
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: ignapp-service
+    spec:
+      selector:
+        app: ignapp
+      ports:
+      - protocol: TCP
+        port: 3210
+        targetPort: 3210
     ```
 
 ## Step 5: Deploy the Node.js App to the Kubernetes Cluster using the Deployment Manifest and Terraform
